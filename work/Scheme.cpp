@@ -194,7 +194,7 @@ void Scheme::SaveResultIntoFiles(double deltaT, string schemeName)
 		string fileName = schemeName + "_" + to_string(deltaT);
 
 		ofstream f;
-		f.open(fileName + ".txt");
+		f.open(fileName + ".csv");
 		for (int t = 0; t < this->sizeT; t++)
 		{
 			for (int x = 0; x < this->sizeX; x++)

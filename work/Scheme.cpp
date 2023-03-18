@@ -141,15 +141,14 @@ bool IsDouble(string input)
 }
 
 //Ask user about delta T ine the console
-//In excercise delta T is: 0.01, 0.02, 0.005, but user can insert other double values
+//Time step is: 0.01, 0.02, 0.005
 void Scheme::InsertDeltaT()
 {
 	string tmpDeltaT;
-	cout << "Insert value of deltaT [examples: 0.01, 0.02, 0.005]: ";
+	cout << "Insert preffered time step: ";
 	getline(cin, tmpDeltaT);
 	while (!IsDouble(tmpDeltaT) || tmpDeltaT == "")
 	{
-		cout << "Wrong input! Please input a double value: ";
 		getline(cin, tmpDeltaT);
 	}
 	//stod method parses str interpreting its content as a floating-point number, 
@@ -194,7 +193,7 @@ void Scheme::SaveResultIntoFiles(double deltaT, string schemeName)
 		string fileName = schemeName + "_" + to_string(deltaT);
 
 		ofstream f;
-		f.open(fileName + ".csv");
+		f.open(fileName + ".xlsx");
 		for (int t = 0; t < this->sizeT; t++)
 		{
 			for (int x = 0; x < this->sizeX; x++)

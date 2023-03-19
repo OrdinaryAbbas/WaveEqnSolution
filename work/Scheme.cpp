@@ -5,12 +5,12 @@ using namespace std;
 //Default, empty constructor
 Scheme::Scheme() {}
 
-//Print to the console five rows from entire matrix
+//Print 10 rows from entire matrix to screen
 // From 0.0 to 0.5 with step 0.1
 void Scheme::PrintResult()
 {
 	//equation computing step for each size matrix 
-	int step = ((this->sizeT - 1) / 0.5)*0.1;
+	int step = (this->sizeT - 1)*0.1;
 
 	cout << "Steps [from 0.0 sec to 0.5 sec] \n";
 	for (int i = 0; i < this->sizeT; i = i + step)
@@ -30,7 +30,6 @@ void Scheme::PrintResult()
 }
 
 //Compute initial condition
-//Used in each scheme
 void Scheme::InitialCondition()
 {
 
@@ -52,7 +51,6 @@ void Scheme::InitialCondition()
 }
 
 //Compute boundry condition
-//Used in each scheme
 void Scheme::BoundryCondition()
 {
 	for (int t = 0; t < this->sizeT; t++)
@@ -63,14 +61,8 @@ void Scheme::BoundryCondition()
 }
 
 //Compute analytical solution 
-//Include four important steps from deltaT to BoundryCondition
-//Then equation is calculated analyticaly
 string Scheme::AnalyticalSolution(double defaultDeltaT)
 {
-	//Preparig matrix -------------------------------------//
-
-	/*If defaultDeltaT is 0 then user will be asked about value of deltaT in console.
-	This situation occurs when user execute program with parameter -analytical*/
 	if (defaultDeltaT == 0)
 	{
 		InsertDeltaT();
@@ -82,9 +74,7 @@ string Scheme::AnalyticalSolution(double defaultDeltaT)
 	ComputeSizeOfMatrix(0);
 	InitialCondition();
 	BoundryCondition();
-	//------------------------------------------------------//
 
-	//Analytical solution----------------------------------//
 	double T;
 	for (int i = 0; i < this->sizeT; i++)
 	{
@@ -101,19 +91,16 @@ string Scheme::AnalyticalSolution(double defaultDeltaT)
 	}
 	//------------------------------------------------------//
 
-	return __func__; //return name of method -> useful for method SaveResultIntoFiles
+	return __func__; //useful for method SaveResultIntoFiles
 }
 
 //Compute three different norms, which have been implemented in Matrix class
-//Norms are printed in console
 void Scheme::ComputeNorms(Matrix m1, Matrix m2)
 {
-	//Subtraction: m1- m2
-	//analytical solution - numerical solution
 	Matrix result = Matrix(m1.getNrows(), m2.getNcols());
 	result = m1 - m2;
 	double size = m2.getNcols()*m2.getNrows();
-	//Print result
+	
 	cout << "--NORMS--";
 	cout<<"\n One norm: "<<result.one_norm()/size;
 	cout<<"\n Second norm: "<<result.two_norm()/size;
@@ -122,7 +109,6 @@ void Scheme::ComputeNorms(Matrix m1, Matrix m2)
 }
 
 //Friend method used in InsertDeltaT method
-//Checking correctness of value deltaT inserting in the console by user
 bool IsDouble(string input)
 {
 	//Loop of the size of the input
@@ -140,8 +126,7 @@ bool IsDouble(string input)
 	return 1;
 }
 
-//Ask user about delta T ine the console
-//Time step is: 0.01, 0.02, 0.005
+//Prompt user to input deltaT
 void Scheme::InsertDeltaT()
 {
 	string tmpDeltaT;
@@ -151,13 +136,10 @@ void Scheme::InsertDeltaT()
 	{
 		getline(cin, tmpDeltaT);
 	}
-	//stod method parses str interpreting its content as a floating-point number, 
-	//which is returned as a value of type double.
 	this->deltaT = stod(tmpDeltaT);
 }
 
-//Compute size of matrix and create it
-//Size depends of deltaT, deltaX, domain and time values
+//Compute size of matrix
 void Scheme::ComputeSizeOfMatrix(bool ifPrinted)
 {
 	//Values from excercise
@@ -183,8 +165,7 @@ void Scheme::ComputeSizeOfMatrix(bool ifPrinted)
 	this_thread::sleep_for(chrono::milliseconds(1000));
 }
 
-//Save results into text file with different name depends on parameters.
-//This is the reason, why some methods have string type.
+//Save results into file with different name depends on parameters.
 void Scheme::SaveResultIntoFiles(double deltaT, string schemeName)
 {
 	try

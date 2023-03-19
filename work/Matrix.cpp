@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "Matrix.h"
 #include <cmath>
 
 using namespace std;
@@ -9,22 +9,22 @@ Matrix::Matrix() : vector<vector<double> >()  {}
 // Alternate constructor - creates a matrix with the given values
 Matrix::Matrix(int Nrows, int Ncols) : vector<vector<double> >()
 {
-    //check, if matrix size is not negative
+    //check the size of the matrix
 	if (Nrows < 0 || Ncols < 0)
 	{
-		throw invalid_argument("matrix size negative");
+		throw invalid_argument("The matrix size is negative");
 	}
     
-	// set the size for the rows
+	// set row size
 	(*this).resize(Nrows);
 
-	// set the size for the columns
+	// set column size
 	for (int i = 0; i < Nrows; i++)
 	{
 		(*this)[i].resize(Ncols);
 	}
 
-	// initialise the matrix to contain zero
+	// initialise the matrix to zero
 	for (int i = 0; i < Nrows; i++)
 	{
 		for (int j = 0; j < Ncols; j++)
@@ -57,21 +57,18 @@ Matrix::Matrix(const Matrix& m) : vector<vector<double> >()
 	}
 }
 
-// ACCESSOR METHODS
-//accessor method - get the number of rows
+// ACCESSOR METHODS- To get the size of the rows and columns
 int Matrix :: getNrows() const
 {
 	return size();
 }
-
-//accessor method - get the number of columns
 int Matrix::getNcols() const
 {
 	return (*this)[0].size();
 }
 
 // NORMS
-//1 norm
+
 double Matrix::one_norm() const
 {
 	int i,j;

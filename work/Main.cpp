@@ -1,8 +1,8 @@
 #include<iostream>
-#include "matrix.h"			//matrix class, inspired on c++ course
-#include "Scheme.h"			//mother class
-#include "ExplicitScheme.h" //inherited class
-#include "ImplicitScheme.h" //inherited class
+#include "Matrix.h"
+#include "Scheme.h"
+#include "ExplicitScheme.h"
+#include "ImplicitScheme.h"
 
 #include <chrono>
 
